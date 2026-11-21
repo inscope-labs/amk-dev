@@ -1,0 +1,6 @@
+{
+  "name": "AMK",
+  "description": "A clean, minimal blank screen Android application for com.inscopelabs.amk.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
