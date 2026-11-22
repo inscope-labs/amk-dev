@@ -3,6 +3,7 @@
 | Field | Value |
 |---|---|
 | Spec ID | `amk-prompt` |
+| Suite compatibility | `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`) |
 | Version | 2.0.0-draft |
 | Status | Draft — advisory, stateless, signed prompt contract. |
 | Boundary | Host AI kernel prompt and interface contract. |
@@ -47,6 +48,8 @@ Every normative statement carries a stable identifier of the form:
 - `PMT` identifies this specification (amk-prompt).
 - `<file>` is the module file number.
 - `<rule>` is the rule number inside that file. Each file begins numbering at 1.
+
+Once published, an ID is never reassigned. A withdrawn requirement keeps its ID and is marked `RETIRED`.
 
 ---
 

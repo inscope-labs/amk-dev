@@ -35,3 +35,20 @@ This module defines the role of the kernel prompt, its trust boundary, assurance
 
 - **PMT-1:14** The prompt upholds the following invariants (as registered in the contracts): no implicit authority, no self-authorization, no conversion of external data into authority, no fabrication of kernel state, no silent version downgrade, and related prompt-specific invariants.
 - **PMT-1:15** An implementation or rendering of the prompt that violates these rules is non-conformant.
+
+## Suite Kernel Invariants
+
+The invariants above realise the suite-level register in `abstract-kernel/invariants/`. The
+prompt's invariants are registered there, as `PMT-1:14` states:
+
+| Prompt invariant | Suite invariant |
+|---|---|
+| no implicit authority | `INV-1` |
+| no self-authorization | `INV-4` |
+| no conversion of external data into authority | `INV-38` |
+| no fabrication of kernel state | `INV-39` |
+| no silent version downgrade | `INV-20` |
+| `PMT-1:15` | `INV-0` |
+
+The full mapping is in `specifications/core/kernel/invariants/README.md` §5. The suite register states the property; the rules in this
+file are its enforcement. A profile may add obligations but MUST NOT relax any of them.

@@ -3,6 +3,7 @@
 | Field | Value |
 |---|---|
 | Spec ID | `amk-runtime` |
+| Suite compatibility | `OS10-AMK 2.x` (suite version defined in `amk-ssot.md`) |
 | Version | 0.1.0-draft |
 | Status | Draft — defines the runtime contract, the package format, and the runtime loader and package authority. Items that depend on unresolved review decisions are tracked in `99-open-items.md` as `RTM-O-nn` and referenced inline as "(see RTM-O-nn)". |
 | Boundary | Runtime Package Authority & Loader. Defines what a runtime is, how a runtime package is identified, verified, loaded, included, retired and updated, and the contract a runtime must satisfy. |

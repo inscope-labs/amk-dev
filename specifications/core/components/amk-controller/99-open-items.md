@@ -36,4 +36,4 @@ Non-normative list of remaining open questions and notes on the migration from t
 - Reference IDs follow the single scheme `CTR-<file>:<rule>`.
 - `RuntimeRegistration` and `ClarificationAnswer` were removed from the catalogue. `Genesis` and `TurnReceipt` were added. Common envelope validation now includes `contract_version` and `ttl` (CTR-3:10, CTR-3:11).
 - File 10 (`08-keys.md`) was added. File numbers are stable identifiers and need not follow file-name order.
-- Cross-spec open items are indexed in `specs/core/OPEN-ITEMS.md`.
+- Cross-spec open items are indexed in `specifications/core/OPEN-ITEMS.md`.

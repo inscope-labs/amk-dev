@@ -31,4 +31,4 @@ This module defines the system package class and the rules for `amk-core`. Syste
 
 ## Candidate First Module (non-normative)
 
-- A host clarification module: a quiz-style UI shown to the operator for quick answers the Host AI needs, answered through the console (see `ClarificationAnswer`, CNS-3). Its definition belongs to the `amk-core` specification (see RTM-O-18).
+- A host clarification module: a quiz-style UI shown to the operator for quick answers the Host AI needs, answered through the console. Its definition belongs to the `amk-core` specification (see RTM-O-18).

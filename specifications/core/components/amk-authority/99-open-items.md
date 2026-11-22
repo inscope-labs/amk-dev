@@ -18,7 +18,7 @@
 - **O-ATA-08** Metadata at a well-known endpoint. RESOLVED (`ATA-01:07`).
 - **O-ATA-09** Audit format and retention per profile. RESOLVED (`ATA-06:10`, `DV-ATA-10`).
 - **O-ATA-10** Batch issuance for multiple roles. CLOSED: not supported in this version; one request yields one attestation (`ATA-02:06`).
-- **O-ATA-11** OPEN. The controller-to-Authority interface that carries the session record and revocation requests: channel, authentication of the controller, delivery and error semantics. Cross-spec with `amk-controller`; to be indexed in `specs/core/OPEN-ITEMS.md`.
+- **O-ATA-11** OPEN. The controller-to-Authority interface that carries the session record and revocation requests: channel, authentication of the controller, delivery and error semantics. Cross-spec with `amk-controller`; to be indexed in `specifications/core/OPEN-ITEMS.md`.
 
 ## ATA-99:02 Blocking Items
 
@@ -37,4 +37,4 @@ Not yet updated: `amk-test-matrix`, `ssot-index`. Discontinued: `amk-contracts`,
 
 ## Cross-spec items
 
-Cross-spec items that affect this specification are indexed in `specs/core/OPEN-ITEMS.md` (`CORE-O-nn`). Existing `O-ATA-nn` IDs are retained; IDs are never reassigned.
+Cross-spec items that affect this specification are indexed in `specifications/core/OPEN-ITEMS.md` (`CORE-O-nn`). Existing `O-ATA-nn` IDs are retained; IDs are never reassigned.

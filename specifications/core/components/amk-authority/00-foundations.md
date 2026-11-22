@@ -33,6 +33,7 @@
 - INV-ATA-05: Revocation status is checked on every verification. Unavailable or stale revocation data is never treated as "not revoked".
 - INV-ATA-06: `valid_from` is never before the start of the epoch, and `valid_to` never exceeds the end of the epoch plus grace window `G`.
 - INV-ATA-07: Only attestations signed by a key that the signed metadata lists as `active` or `retired` are accepted.
+- An implementation that violates any invariant listed above is non-conformant.
 
 ## ATA-00:05 Relationship to Other Components
 
@@ -43,3 +44,20 @@
 ## ATA-00:06 Summary
 
 - The Authority is a self-contained, language-agnostic issuer of role attestations. It is trusted only for what it signs. Enforcement belongs elsewhere.
+
+## ATA-00:07 Suite Kernel Invariants
+
+The invariants in `ATA-00:04` realise the suite-level register in `abstract-kernel/invariants/`:
+
+| Component invariant | Suite invariant |
+|---|---|
+| `INV-ATA-01` | `INV-12` |
+| `INV-ATA-02` | `INV-13` |
+| `INV-ATA-03` | `INV-7` |
+| `INV-ATA-04` | `INV-10` |
+| `INV-ATA-05` | `INV-11` |
+| `INV-ATA-06` | `INV-14` |
+| `INV-ATA-07` | `INV-15` |
+
+The full mapping is in `specifications/core/kernel/invariants/README.md` §5. The suite register states the property; the rules in this
+file are its enforcement. A profile may add obligations but MUST NOT relax any of them.
