@@ -10,7 +10,7 @@ Non-normative list of open questions and the defaults this specification needs. 
 
 | ID | Item | Depends on | Draft position in this spec |
 |---|---|---|---|
-| RTM-O-01 | Loader placement: embedded in the controller release behind its own isolation boundary, or a separate fourth component | X-09; AMK is defined as exactly three components | Embedded in the controller release (RTM-5:1, RTM-5:2) |
+| RTM-O-01 | Loader placement: embedded in the controller release behind its own isolation boundary, or a separate fourth component | X-09; AMK is defined as exactly five core components | Embedded in the controller release (RTM-5:1, RTM-5:2) |
 | RTM-O-02 | Console→controller envelope for runtime subtree and package intake: type name, and whether package bytes are uploaded by the console or fetched by the loader by hash | X-04d | Console-signed reference with package hash (RTM-4:9); upload by hash preferred over fetch, because private repositories are operator-only |
 | RTM-O-03 | Execution environment constraints and a platform implementation profile (for example JS/WASM isolates on an edge platform; no native code) | CTR-13 | Platform-agnostic here; implementation profile is a companion document |
 | RTM-O-04 | Whether a console-signed pre-authorization may satisfy "authorize inclusion in every session" | CNS-12, CNS-07 | Yes, where the console spec permits (RTM-4:24) |
@@ -20,7 +20,7 @@ Non-normative list of open questions and the defaults this specification needs. 
 | RTM-O-08 | The conformance rule set ("protocol standards"), its content and versioning | none | Applied by console and loader (RTM-6:13, RTM-6:14) |
 | RTM-O-09 | Update profile database: location, signer, schema, freshness | none | Signed statements only (RTM-6:17) |
 | RTM-O-10 | Publisher trust model: operator pins only, or a publisher PKI; publisher key rotation and compromise handling | X-02 | Operator pins; key change = new publisher (RTM-6:6) |
-| RTM-O-11 | Package size limits and the upload envelope size ceiling | X-04 | Values go to the defaults manifest |
+| RTM-O-11 | Package size limits and the upload envelope size ceiling | X-04 | Values go to the Defaults block in file 9 |
 | RTM-O-12 | In-band API wire format, transport, invocation timeouts, and the standard error-code catalogue | CTR-14f | Operations defined, wire format deferred (RTM-3:3) |
 | RTM-O-13 | Canonical serialization and hash algorithm for the manifest and package hash | X-04 | Shared with the envelope serialization decision (RTM-2:9) |
 | RTM-O-14 | Prompt content: delivery format, and whether prompt content is signed separately from the package | none | Prompts are digested in the manifest (RTM-2:4) |
@@ -33,9 +33,9 @@ Non-normative list of open questions and the defaults this specification needs. 
 
 ---
 
-## Defaults Needed in `amk-defaults-manifest`
+## Defaults Needed
 
-No default value is stated in this specification. Each is defined only in the defaults manifest.
+No default value is stated in this specification. Each is defined only in the Defaults block of this file (file 9), which is the single Defaults block for the specification.
 
 | ID | Meaning | Used by |
 |---|---|---|

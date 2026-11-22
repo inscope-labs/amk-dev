@@ -13,6 +13,7 @@
   - **Standard:** non-exportable keys, full revocation list, process isolation.
   - **High:** HSM/TEE-protected signing keys with published attestation evidence, real-time revocation, hardware-protected audit of issuance.
 - The profile in use MUST be documented and published as `profile` in the signed metadata (`ATA-01:07`).
+- The invariants defined in file 1 apply at every profile.
 
 ## ATA-06:02 Basic Profile
 

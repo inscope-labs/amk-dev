@@ -49,3 +49,21 @@ This module defines the core terminology, the console’s role as the sole human
 - **CNS-1:15** All external communication occurs through envelopes defined in this specification, subject to the exception in CNS-3:21.
 
 **CNS-1:16** An implementation that violates any invariant listed above is non-conformant.
+
+## Suite Kernel Invariants
+
+The invariants above realise the suite-level register in `abstract-kernel/invariants/`:
+
+| Component invariant | Suite invariant |
+|---|---|
+| `CNS-1:9` | `INV-1` |
+| `CNS-1:10` | `INV-5` |
+| `CNS-1:11` | `INV-6` |
+| `CNS-1:12` | `INV-19` |
+| `CNS-1:13` | `INV-7` |
+| `CNS-1:14` | `INV-9` |
+| `CNS-1:15` | `INV-9`, `INV-48` |
+| `CNS-1:16` | `INV-0` |
+
+The full mapping is in `specifications/core/kernel/invariants/README.md` §5. The suite register states the property; the rules in this
+file are its enforcement. A profile may add obligations but MUST NOT relax any of them.

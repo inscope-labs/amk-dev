@@ -63,3 +63,22 @@ This module defines the core terminology, the role of amk-runtime as package aut
 - **RTM-1:19** No silent downgrades of contract, package or runtime versions.
 
 **RTM-1:20** An implementation that violates any invariant listed above is non-conformant.
+
+## Suite Kernel Invariants
+
+The invariants above realise the suite-level register in `abstract-kernel/invariants/`:
+
+| Component invariant | Suite invariant |
+|---|---|
+| `RTM-1:12` | `INV-1`, `INV-41` |
+| `RTM-1:13` | `INV-16`, `INV-44` |
+| `RTM-1:14` | `INV-42` |
+| `RTM-1:15` | `INV-24`, `INV-7` |
+| `RTM-1:16` | `INV-25`, `INV-34` |
+| `RTM-1:17` | `INV-19`, `INV-45` |
+| `RTM-1:18` | `INV-25` |
+| `RTM-1:19` | `INV-20` |
+| `RTM-1:20` | `INV-0` |
+
+The full mapping is in `specifications/core/kernel/invariants/README.md` §5. The suite register states the property; the rules in this
+file are its enforcement. A profile may add obligations but MUST NOT relax any of them.

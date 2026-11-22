@@ -40,7 +40,7 @@ This module defines the obligations of the loader: what it verifies before any c
 ## Resource Limits
 
 - **RTM-5:14** The loader MUST enforce limits on CPU time, memory, package size, call duration and outbound calls for every runtime.
-- **RTM-5:15** Limit values come from the defaults manifest (`DV-RTM-nn`, see file 9) and MAY be tightened per session by the controller. They MUST NOT be raised by a runtime.
+- **RTM-5:15** Limit values come from the Defaults block of file 9 (`DV-RTM-nn`) and MAY be tightened per session by the controller. They MUST NOT be raised by a runtime.
 - **RTM-5:16** A runtime that exceeds a limit MUST be stopped, and the event reported to the controller and audited.
 
 ## Failure Handling

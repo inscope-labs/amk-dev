@@ -37,3 +37,20 @@ This module defines the controller’s role as the sole enforcement and state au
 - **CTR-1:18** The controller never creates or widens a pre-authorization envelope.
 - **CTR-1:19** The Host AI never receives a capability token; it learns only outcomes.
 - **CTR-1:20** An implementation that violates any invariant is non-conformant.
+
+## Suite Kernel Invariants
+
+The invariants above realise the suite-level register in `abstract-kernel/invariants/`:
+
+| Component invariant | Suite invariant |
+|---|---|
+| `CTR-1:14` | `INV-9`, `INV-2` |
+| `CTR-1:15` | `INV-17` |
+| `CTR-1:16` | `INV-19` |
+| `CTR-1:17` | `INV-20` |
+| `CTR-1:18` | `INV-4`, `INV-28` |
+| `CTR-1:19` | `INV-35`, `INV-26` |
+| `CTR-1:20` | `INV-0` |
+
+The full mapping is in `specifications/core/kernel/invariants/README.md` §5. The suite register states the property; the rules in this
+file are its enforcement. A profile may add obligations but MUST NOT relax any of them.
