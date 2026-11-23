@@ -1,0 +1,166 @@
+1. Analysis of the Existing game/go Directory
+
+The repository at app/src/main/java/com/inscopelabs/amk/game/go is a placeholder skeleton—none of the subdirectories contain actual Kotlin/Java source files, only .gitkeep markers. The structure is:
+
+```
+game/go/
+├── agents/       (empty — .gitkeep only)
+├── board/        (empty — .gitkeep only)
+├── moves/        (empty — .gitkeep only)
+├── players/      (empty — .gitkeep only)
+├── rules/        (empty — .gitkeep only)
+└── scenarios/    (empty — .gitkeep only)
+```
+
+This is a blank canvas. The subdirectory names suggest an intended separation of concerns (board representation, move validation, player/agent logic, rule enforcement, scenario setup), but no implementation exists yet. The commit message confirms this is an initial scaffold: “feat: initialize blank screen application.”
+
+---
+
+2. Updated standard-go Directory (replaces game/go)
+
+This structure implements the Standard Go engine and UI for Android, mirroring the modular architecture of the web reference (super-go/) while adapting it to Kotlin and Jetpack Compose.
+
+```
+standard-go/
+├── engine/
+│   ├── Board.kt              — 2D board state, stone placement, capture resolution
+│   ├── Engine.kt             — Game orchestrator (turn, pass, undo, snapshot)
+│   ├── Group.kt              — Connected-stone group tracking
+│   ├── Liberty.kt            — Liberty calculation (flood-fill)
+│   ├── Move.kt               — Move data class (row, col, isPass, isResign)
+│   ├── Rules.kt              — Ko, suicide, superko validation
+│   ├── Score.kt              — Territory scoring (Japanese/Chinese)
+│   └── Zobrist.kt            — Position hashing (for superko + bot transposition)
+│
+├── model/
+│   ├── GameConfig.kt         — Board size, komi, ruleset, handicap
+│   ├── GameState.kt          — Immutable snapshot (board, turn, captures)
+│   ├── Player.kt             — Player identity (human/bot)
+│   └── Team.kt               — Black / White constants
+│
+├── controller/
+│   ├── GameController.kt     — StateFlow-driven controller, binds Engine ↔ UI
+│   └── GameEvent.kt          — Sealed class (MoveMade, Capture, Pass, GameOver)
+│
+├── ui/
+│   ├── board/
+│   │   ├── GoBoard.kt        — Compose Canvas: grid, hoshi, stones, ghost stone
+│   │   ├── BoardViewport.kt  — Pan/zoom wrapper for 19×19; tap-tap confirm
+│   │   └── Stone.kt          — Stone composable (radial gradient)
+│   ├── screen/
+│   │   ├── GameScreen.kt     — Main game surface (board + info bar + controls)
+│   │   └── MenuScreen.kt     — Board size selection, mode toggle
+│   └── theme/
+│       ├── Color.kt          — Wood, parchment, ash palette from base.css
+│       ├── Theme.kt          — MaterialTheme composition
+│       └── Type.kt           — Typography (Georgia serif equivalents)
+│
+├── bot/
+│   ├── MctsBot.kt            — Suspending MCTS (runs on Dispatchers.Default)
+│   └── RandomBot.kt          — Baseline random playout bot
+│
+├── io/
+│   ├── SgfParser.kt          — SGF import/export
+│   └── GameSerializer.kt     — JSON snapshot persistence
+│
+└── util/
+    └── Extensions.kt         — Board coordinate helpers, math utils
+```
+
+Key mappings from the web reference:
+
+Web file (super-go/) Kotlin replacement
+core/Engine.js engine/Engine.kt
+core/StandardGo.js engine/Rules.kt
+core/Constants.js model/Team.kt
+ui/GoBoard.js ui/board/GoBoard.kt
+ui/BoardViewport.js ui/board/BoardViewport.kt
+ui/GameUI.js ui/screen/GameScreen.kt
+ui/AudioEngine.js (optional) audio/GoAudioEngine.kt via AudioTrack
+bots/BotRunner.js bot/MctsBot.kt (suspend fun getMove())
+bots/BotPlayer.js / BotWorker.js Deleted — coroutines replace worker choreography
+
+---
+
+3. super-go Directory (extends Standard Go)
+
+This structure layers the triple-board, resource-managed, Fog-of-War, role-based mechanics on top of the standard-go foundation. It assumes standard-go is a dependency (or a sibling package).
+
+```
+super-go/
+├── engine/
+│   ├── TripleEngine.kt       — Holds 3 × standard Engine; shared turn rotation
+│   ├── ResourcePool.kt       — Shared stone pool: debit, credit, collapse check
+│   ├── FogState.kt           — Per-board revealed quadrants (Set<Quadrant>)
+│   ├── Role.kt               — Enum: OPENER, MIDFIELDER, CLOSER
+│   ├── RoleState.kt          — Per-player role + active phase tracking
+│   ├── SunTzuConfig.kt       — Flags: feint, neglectBonus, supplyDepot, blitz
+│   └── SynergyTracker.kt     — Listens to capture events; awards +15 on triple
+│
+├── model/
+│   ├── SuperGoConfig.kt      — Extends GameConfig with pool size, fog on/off
+│   ├── Cycle.kt              — Rotation cycle counter and phase hand-off points
+│   └── Quadrant.kt           — NW / NE / SW / SE enum
+│
+├── controller/
+│   └── TripleGameController.kt — Coordinates 3 engines, pool, roles, fog
+│
+├── ui/
+│   ├── board/
+│   │   ├── TripleBoardPager.kt — HorizontalPager + mini-strip (3-board overview)
+│   │   ├── FogOverlay.kt       — Per-quadrant mask with reveal animation
+│   │   └── QuadrantToken.kt    — Pulses until revealed
+│   ├── panel/
+│   │   ├── StonePoolPanel.kt   — Treasurer dashboard (always visible)
+│   │   ├── RolePanel.kt        — Active role indicator + hand-off control
+│   │   └── SynergyTracker.kt   — Cycle log and triple-synergy counter
+│   └── screen/
+│       └── TripleGameScreen.kt — Main Super Go surface
+│
+├── bot/
+│   └── TripleMctsBot.kt      — Launches 3 MCTS coroutines; combines results
+│
+└── dialog/
+    ├── SacrificeConfirmDialog.kt — Cross-board sacrifice cost confirmation
+    └── VetoOverrideDialog.kt     — 2-stone veto override confirmation
+```
+
+New mechanics exclusive to Super Go:
+
+Super Go rule Kotlin implementation
+Shared stone pool ResourcePool.kt — wraps TripleEngine placement; rejects moves when pool empty
+Fog of War FogState.kt + FogOverlay.kt — quadrant reveal on first placement
+Roles Role.kt + RoleState.kt — phase-based decision authority
+Cross-board sacrifice TripleGameController.kt — burns 10 stones, grants extra move (with cooldown)
+Triple synergy SynergyTracker.kt — subscribes to capture events from all 3 engines
+Resource collapse ResourcePool.kt — triggers forfeit after 3 rotations at zero
+Sun Tzu (vs AI) SunTzuConfig.kt — optional flags on TripleEngine
+
+---
+
+4. Game Files Outside the Game Directory
+
+In the current repository, the amk package contains several sibling directories to game/: application, clients, console, contracts, data, security, and ui. All of these are currently empty (.gitkeep only), except for the root-level MainActivity.kt.
+
+There are no other existing game-specific files outside the game/ directory at this time. The only file that will interact with the game is:
+
+· MainActivity.kt — the Android entry point; will launch the game screen.
+
+Recommended additions outside game/ (to be created):
+
+File / Package Purpose
+ui/GameActivity.kt Compose host activity for the game (if not using MainActivity)
+ui/navigation/AppNavGraph.kt Navigation graph routing to GameScreen or TripleGameScreen
+data/repository/GameRepository.kt Persistence of game snapshots (Room / DataStore)
+di/GameModule.kt Hilt/Koin dependency injection bindings for engines and bots
+application/AmkApplication.kt Application class holding singleton engine references
+
+These are not game-logic files, but they are game-support files that live outside the game/ package boundary.
+
+---
+
+Summary
+
+· Existing game/go is a placeholder; replace it with the standard-go structure above.
+· super-go should be a sibling package under game/ (i.e., game/super-go/).
+· No game files currently exist outside game/ except MainActivity.kt; the recommended external files (Activity, navigation, DI, repository) should be added as the app matures.
